@@ -30,11 +30,11 @@ namespace Lab_3_gr
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea5 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Series series17 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series18 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series19 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series20 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
@@ -53,6 +53,9 @@ namespace Lab_3_gr
             this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.оПрограммеToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveResultToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveInputToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.readDataToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.AboutToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.button2 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
@@ -63,34 +66,34 @@ namespace Lab_3_gr
             // 
             // chart1
             // 
-            chartArea5.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea5);
+            chartArea1.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea1);
             this.chart1.Location = new System.Drawing.Point(11, 37);
             this.chart1.Name = "chart1";
-            series17.BorderWidth = 3;
-            series17.ChartArea = "ChartArea1";
-            series17.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
-            series17.Color = System.Drawing.Color.Red;
-            series17.Name = "Series1";
-            series18.BorderWidth = 3;
-            series18.ChartArea = "ChartArea1";
-            series18.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
-            series18.Color = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
-            series18.Name = "Series2";
-            series19.BorderWidth = 3;
-            series19.ChartArea = "ChartArea1";
-            series19.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
-            series19.Color = System.Drawing.Color.Lime;
-            series19.Name = "Series3";
-            series20.BorderWidth = 3;
-            series20.ChartArea = "ChartArea1";
-            series20.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
-            series20.Color = System.Drawing.Color.Blue;
-            series20.Name = "Series4";
-            this.chart1.Series.Add(series17);
-            this.chart1.Series.Add(series18);
-            this.chart1.Series.Add(series19);
-            this.chart1.Series.Add(series20);
+            series1.BorderWidth = 3;
+            series1.ChartArea = "ChartArea1";
+            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            series1.Color = System.Drawing.Color.Red;
+            series1.Name = "Series1";
+            series2.BorderWidth = 3;
+            series2.ChartArea = "ChartArea1";
+            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            series2.Color = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
+            series2.Name = "Series2";
+            series3.BorderWidth = 3;
+            series3.ChartArea = "ChartArea1";
+            series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            series3.Color = System.Drawing.Color.Lime;
+            series3.Name = "Series3";
+            series4.BorderWidth = 3;
+            series4.ChartArea = "ChartArea1";
+            series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            series4.Color = System.Drawing.Color.Blue;
+            series4.Name = "Series4";
+            this.chart1.Series.Add(series1);
+            this.chart1.Series.Add(series2);
+            this.chart1.Series.Add(series3);
+            this.chart1.Series.Add(series4);
             this.chart1.Size = new System.Drawing.Size(545, 400);
             this.chart1.TabIndex = 0;
             this.chart1.Text = "chart1";
@@ -162,14 +165,16 @@ namespace Lab_3_gr
             // textBox1
             // 
             this.textBox1.Location = new System.Drawing.Point(762, 136);
+            this.textBox1.MaxLength = 5;
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(100, 22);
             this.textBox1.TabIndex = 12;
-            this.textBox1.Text = "7";
+            this.textBox1.Text = "5";
             // 
             // textBox2
             // 
             this.textBox2.Location = new System.Drawing.Point(762, 167);
+            this.textBox2.MaxLength = 5;
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(100, 22);
             this.textBox2.TabIndex = 13;
@@ -178,6 +183,7 @@ namespace Lab_3_gr
             // textBox3
             // 
             this.textBox3.Location = new System.Drawing.Point(762, 201);
+            this.textBox3.MaxLength = 5;
             this.textBox3.Name = "textBox3";
             this.textBox3.Size = new System.Drawing.Size(100, 22);
             this.textBox3.TabIndex = 14;
@@ -186,6 +192,7 @@ namespace Lab_3_gr
             // textBox4
             // 
             this.textBox4.Location = new System.Drawing.Point(762, 234);
+            this.textBox4.MaxLength = 5;
             this.textBox4.Name = "textBox4";
             this.textBox4.Size = new System.Drawing.Size(100, 22);
             this.textBox4.TabIndex = 15;
@@ -203,6 +210,7 @@ namespace Lab_3_gr
             // textBox5
             // 
             this.textBox5.Location = new System.Drawing.Point(762, 262);
+            this.textBox5.MaxLength = 5;
             this.textBox5.Name = "textBox5";
             this.textBox5.Size = new System.Drawing.Size(100, 22);
             this.textBox5.TabIndex = 17;
@@ -226,9 +234,34 @@ namespace Lab_3_gr
             // 
             // оПрограммеToolStripMenuItem
             // 
+            this.оПрограммеToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.saveResultToolStripMenuItem,
+            this.saveInputToolStripMenuItem,
+            this.readDataToolStripMenuItem});
             this.оПрограммеToolStripMenuItem.Name = "оПрограммеToolStripMenuItem";
-            this.оПрограммеToolStripMenuItem.Size = new System.Drawing.Size(59, 24);
-            this.оПрограммеToolStripMenuItem.Text = "Файл";
+            this.оПрограммеToolStripMenuItem.Size = new System.Drawing.Size(46, 24);
+            this.оПрограммеToolStripMenuItem.Text = "File";
+            // 
+            // saveResultToolStripMenuItem
+            // 
+            this.saveResultToolStripMenuItem.Name = "saveResultToolStripMenuItem";
+            this.saveResultToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.saveResultToolStripMenuItem.Text = "save result";
+            this.saveResultToolStripMenuItem.Click += new System.EventHandler(this.saveResultToolStripMenuItem_Click);
+            // 
+            // saveInputToolStripMenuItem
+            // 
+            this.saveInputToolStripMenuItem.Name = "saveInputToolStripMenuItem";
+            this.saveInputToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.saveInputToolStripMenuItem.Text = "save input";
+            this.saveInputToolStripMenuItem.Click += new System.EventHandler(this.saveInputToolStripMenuItem_Click);
+            // 
+            // readDataToolStripMenuItem
+            // 
+            this.readDataToolStripMenuItem.Name = "readDataToolStripMenuItem";
+            this.readDataToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.readDataToolStripMenuItem.Text = "read data";
+            this.readDataToolStripMenuItem.Click += new System.EventHandler(this.readDataToolStripMenuItem_Click);
             // 
             // AboutToolStripMenuItem1
             // 
@@ -304,6 +337,9 @@ namespace Lab_3_gr
         private System.Windows.Forms.ToolStripMenuItem оПрограммеToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem AboutToolStripMenuItem1;
         private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.ToolStripMenuItem saveResultToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem saveInputToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem readDataToolStripMenuItem;
     }
 }
 

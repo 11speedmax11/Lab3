@@ -22,9 +22,9 @@ namespace Lab_3_gr
 
             DataTable tableDot = new DataTable();
             
-            tableDot.Columns.Add("Y", typeof(double));
             tableDot.Columns.Add("X", typeof(double));
-            tableDot.Columns.Add("-X", typeof(double));
+            tableDot.Columns.Add("Y", typeof(double));
+            tableDot.Columns.Add("-Y", typeof(double));
             for (int i = 0; i < dot.Count; i++)
             {
                 tableDot.Rows.Add(dot[i], points[i], -points[i]);

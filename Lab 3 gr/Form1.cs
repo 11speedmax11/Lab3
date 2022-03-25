@@ -13,10 +13,13 @@ namespace Lab_3_gr
 {
     public partial class Form1: Form
     {
-        Table table;
+        static double a, c, leftBorder, rightBorder, step;
+        double[] parameters = new[] { a, c, leftBorder, rightBorder, step };
         JobFile jodFile = new JobFile();
         Calculation calculation = new Calculation();
         about aboutProgr = new about(false);
+        List<double> points = new List<double>();
+        List<double> dot = new List<double>();
         private readonly string error = "Wrong data";
         private readonly string borderError = "Wrong border edges";
         private readonly string errorOfConst = "Graph is dot";
@@ -27,49 +30,43 @@ namespace Lab_3_gr
             {
                 aboutProgr.Show();
             }
+            saveResultToolStripMenuItem.Enabled = false;
+            saveInputToolStripMenuItem.Enabled = false;
         }
 
-        bool GetDouble(TextBox text, out double num)
+        bool GetDouble(string text, out double num)
         {
-           return (double.TryParse(text.Text, out num) && !text.Text.Contains(','));
+           return (double.TryParse(text, out num) && !text.Contains(','));
         }
-        bool CheckData() 
+        bool CheckData(string strA, string strC, string strLeftBorder, string strRightBorder, string strStep) 
         {
             errorProvider1.Clear();
             bool flag = true;
-            if (!GetDouble(textBox1, out double a)) 
+            if (!GetDouble(strA, out a)) 
             {
                 errorProvider1.SetError(textBox1, error);
                 flag = false;
             }
-            if (!GetDouble(textBox2, out double c))
+            if (!GetDouble(strC, out c))
             {
                 errorProvider1.SetError(textBox2, error);
                 flag = false;
             }
-            if (!GetDouble(textBox3, out double leftBorder))
+            if (!GetDouble(strLeftBorder, out leftBorder))
             {
                 errorProvider1.SetError(textBox3, error);
                 flag = false;
             }
-            if (!GetDouble(textBox4, out double rightBorder))
+            if (!GetDouble(strRightBorder, out rightBorder))
             {
                 errorProvider1.SetError(textBox4, error);
                 flag = false;
             }
-            if (!GetDouble(textBox5, out double step))
-            {
-                errorProvider1.SetError(textBox5, error);
-                flag = false;
-
-            }
-            else
-            if (step <= 0.001)
+            if (!GetDouble(strStep, out step))
             {
                 errorProvider1.SetError(textBox5, error);
                 flag = false;
             }
-            else
             if ((rightBorder - leftBorder) - step <= 0) 
             {
                 errorProvider1.SetError(textBox5, errorOfConst);
@@ -95,48 +92,6 @@ namespace Lab_3_gr
 
             return flag;
         }
-        private void calculetGraph(double leftBorder, double rightBorder, double a, double c, ref List<double> points, ref List<double> dot) 
-        {
-            double dotStart = 0;
-            double pointsStart = 0;
-            for (int i = 0; i < dot.Count(); i++)
-            {
-                if (dot[i] < 0 || a >= c)
-                {
-                    chart1.Series[0].Points.AddXY(dot[i], points[i]);
-                    dotStart = dot[i];
-                    pointsStart = points[i];
-                }
-                else
-                    chart1.Series[1].Points.AddXY(dot[i], points[i]);
-            }
-            if (rightBorder - dotStart > 0.001 && a <= c)
-                chart1.Series[2].Points.AddXY(dotStart, pointsStart);
-
-            double dotEnd = 0;
-            double pointsEnd = 0;
-
-            if (rightBorder - dot[dot.Count - 1] > 0.001 && a < c)
-                chart1.Series[3].Points.AddXY(dot[dot.Count - 1], points[dot.Count - 1]);
-            else if (rightBorder - dot[dot.Count - 1] > 0.001)
-                chart1.Series[2].Points.AddXY(dot[dot.Count - 1], points[dot.Count - 1]);
-
-            for (int i = dot.Count(); i > 0; i--)
-            {
-                if (dot[i - 1] < 0 || a >= c)
-                    chart1.Series[2].Points.AddXY(dot[i - 1], -points[i - 1]);
-                else
-                {
-                    chart1.Series[3].Points.AddXY(dot[i - 1], -points[i - 1]);
-                    dotEnd = dot[i - 1];
-                    pointsEnd = points[i - 1];
-                }
-            }
-            if (leftBorder < dot[0] )
-                chart1.Series[2].Points.AddXY(dot[0], points[0]);
-            if (a < c)
-                chart1.Series[3].Points.AddXY(dotEnd, pointsEnd);
-        }
         private void button1_Click(object sender, EventArgs e)
         {
             chart1.ChartAreas[0].AxisX.LabelStyle.Format = "F2";
@@ -144,32 +99,76 @@ namespace Lab_3_gr
             chart1.Series[1].Points.Clear();
             chart1.Series[2].Points.Clear();
             chart1.Series[3].Points.Clear();
-            if (CheckData())
+            if (CheckData(textBox1.Text, textBox2.Text, textBox3.Text, textBox4.Text, textBox5.Text))
             {
-                double a, c, leftBorder, rightBorder, step;
-                double.TryParse(textBox1.Text, out a);
-                double.TryParse(textBox2.Text, out c);
-                double.TryParse(textBox3.Text, out leftBorder);
-                double.TryParse(textBox4.Text, out rightBorder);
-                double.TryParse(textBox5.Text, out step);
-                a = Math.Abs(a);
-                c = Math.Abs(c);
-                List<double> points = new List<double>();
-                List<double> dot = new List<double>();
+                a = Math.Round(Math.Abs(a), 3);
+                c = Math.Round(Math.Abs(c), 3);
+                points = new List<double>();
+                dot = new List<double>();
                 double left = leftBorder;
                 while (left <= rightBorder + 0.00001)
                 {
-                    dot.Add(left);
+                    dot.Add(Math.Round(left, 3));
                     left += step;
                 }
                 if (calculation.GetPoints(a, c, ref points, ref dot))
                 {
-                    calculetGraph(leftBorder, rightBorder, a, c, ref points, ref dot);
+                    saveResultToolStripMenuItem.Enabled = false;
+                    saveInputToolStripMenuItem.Enabled = false;
+                    List<double[]>[] graph =calculation.calculetGraph(leftBorder, rightBorder, a, c, ref points, ref dot);
+                    for (int i = 0; i < graph.Length; i++) 
+                    {
+                        for (int j = 0; j < graph[i].Count; j++)
+                        {
+                            chart1.Series[i].Points.AddXY(graph[i][j][0], graph[i][j][1]);
+                        }
+                    }
                 }
                 else
                     errorProvider1.SetError(textBox2, errorOfConst);
             }
         }
+
+        private void readDataToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            
+            OpenFileDialog fileTable = new OpenFileDialog();
+            fileTable.Filter = "Text files(*.txt)|*.txt";
+            fileTable.ShowDialog();
+            string filename = fileTable.FileName;
+            try
+            {
+                string[] readText = System.IO.File.ReadAllLines(filename);
+                if (readText.Length >= parameters.Length)
+                {
+                    if (CheckData(readText[0], readText[1], readText[2], readText[3], readText[4]))
+                    {
+                        textBox1.Text = readText[0];
+                        textBox2.Text = readText[1];
+                        textBox3.Text = readText[2];
+                        textBox4.Text = readText[3];
+                        textBox5.Text = readText[4];
+                    }
+                    else 
+                    {
+                        textBox1.Text = "";
+                        textBox2.Text = "";
+                        textBox3.Text = "";
+                        textBox4.Text = "";
+                        textBox5.Text = "";
+                    }
+                }
+                else
+                    MessageBox.Show("invalid data format", "error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch 
+            {
+                MessageBox.Show("file was not selected, data was not read", "warning", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+            }
+
+        }
+
         private void AboutToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             if (!aboutProgr.Visible)
@@ -185,17 +184,12 @@ namespace Lab_3_gr
         }
         private void button2_Click(object sender, EventArgs e)
         {
-            if (CheckData())
+            if (CheckData(textBox1.Text, textBox2.Text, textBox3.Text, textBox4.Text, textBox5.Text))
             {
-                GetDouble(textBox1, out double a);
-                GetDouble(textBox2, out double c);
-                GetDouble(textBox3, out double leftBorder);
-                GetDouble(textBox4, out double rightBorder);
-                GetDouble(textBox5, out double step);
                 a = Math.Abs(a);
                 c = Math.Abs(c);
-                List<double> points = new List<double>();
-                List<double> dot = new List<double>();
+                points = new List<double>();
+                dot = new List<double>();
                 double left = leftBorder;
                 while (left <= rightBorder + 0.00001)
                 {
@@ -204,12 +198,64 @@ namespace Lab_3_gr
                 }
                 if (calculation.GetPoints(a, c, ref points, ref dot))
                 {
-                    table = new Table();
+                    saveResultToolStripMenuItem.Enabled = false;
+                    saveInputToolStripMenuItem.Enabled = false;
+                    Table table = new Table();
                     table.createTable(dot, points);
                     table.ShowDialog();
                 }
                 else
                     errorProvider1.SetError(textBox2, errorOfConst);
+            }
+        }
+
+        private void saveResultToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog fileTable = new SaveFileDialog();
+            fileTable.Filter = "Text files(*.txt)|*.txt";
+            fileTable.CreatePrompt = true;
+            fileTable.OverwritePrompt = true;
+            fileTable.ShowDialog();
+            string filename = fileTable.FileName;
+            List<string> table = new List<string>();
+            table.Add("X".PadLeft(4, ' ').PadRight(13, ' ') + "Y".PadLeft(4, ' ').PadRight(13, ' ') + "-Y".PadLeft(4, ' ').PadRight(13, ' '));
+            for (int i = 0; i < dot.Count(); i++)
+            {
+                table.Add(dot[i].ToString().PadRight(13, ' ') + points[i].ToString().PadRight(13, ' ') + (-points[i]).ToString().PadRight(13, ' '));
+            }
+            try
+            {
+                System.IO.File.WriteAllLines(filename, table);
+            }
+            catch
+            {
+                MessageBox.Show("file was not selected, data was not saved", "warning", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
+        private void saveInputToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog fileTable = new SaveFileDialog();
+            fileTable.Filter = "Text files(*.txt)|*.txt";
+            fileTable.CreatePrompt = true;
+            fileTable.OverwritePrompt = true;
+            fileTable.ShowDialog();
+            string filename = fileTable.FileName;
+            List<string> table = new List<string>
+            {
+                a.ToString(),
+                c.ToString(),
+                leftBorder.ToString(),
+                rightBorder.ToString(),
+                step.ToString()
+            };
+            try
+            {
+                System.IO.File.WriteAllLines(filename, table);
+            }
+            catch
+            {
+                MessageBox.Show("file was not selected, data was not saved", "warning", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
     }
