@@ -13,6 +13,7 @@ namespace Lab_3_gr
 {
     public partial class Form1: Form
     {
+        Graph graph = new Graph();
         static double a, c, leftBorder, rightBorder, step;
         double[] parameters = new[] { a, c, leftBorder, rightBorder, step };
         JobFile jodFile = new JobFile();
@@ -20,9 +21,11 @@ namespace Lab_3_gr
         about aboutProgr = new about(false);
         List<double> points = new List<double>();
         List<double> dot = new List<double>();
+        const int numberGraphs = 4;
         private readonly string error = "Wrong data";
         private readonly string borderError = "Wrong border edges";
         private readonly string errorOfConst = "Graph is dot";
+
         public Form1()
         {
             InitializeComponent();
@@ -33,7 +36,6 @@ namespace Lab_3_gr
             saveResultToolStripMenuItem.Enabled = false;
             saveInputToolStripMenuItem.Enabled = false;
         }
-
         bool GetDouble(string text, out double num)
         {
            return (double.TryParse(text, out num) && !text.Contains(','));
@@ -95,40 +97,34 @@ namespace Lab_3_gr
         private void button1_Click(object sender, EventArgs e)
         {
             chart1.ChartAreas[0].AxisX.LabelStyle.Format = "F2";
-            chart1.Series[0].Points.Clear();
-            chart1.Series[1].Points.Clear();
-            chart1.Series[2].Points.Clear();
-            chart1.Series[3].Points.Clear();
+            for(int i = 0; i < numberGraphs; i++)
+                chart1.Series[i].Points.Clear();
+
             if (CheckData(textBox1.Text, textBox2.Text, textBox3.Text, textBox4.Text, textBox5.Text))
             {
                 a = Math.Round(Math.Abs(a), 3);
                 c = Math.Round(Math.Abs(c), 3);
                 points = new List<double>();
                 dot = new List<double>();
-                double left = leftBorder;
-                while (left <= rightBorder + 0.00001)
-                {
-                    dot.Add(Math.Round(left, 3));
-                    left += step;
-                }
+
+                for(double i = leftBorder; i <= rightBorder + 0.00001; i += step)
+                    dot.Add(Math.Round(i, 3));
+
                 if (calculation.GetPoints(a, c, ref points, ref dot))
                 {
-                    saveResultToolStripMenuItem.Enabled = false;
-                    saveInputToolStripMenuItem.Enabled = false;
-                    List<double[]>[] graph =calculation.calculetGraph(leftBorder, rightBorder, a, c, ref points, ref dot);
-                    for (int i = 0; i < graph.Length; i++) 
-                    {
-                        for (int j = 0; j < graph[i].Count; j++)
-                        {
-                            chart1.Series[i].Points.AddXY(graph[i][j][0], graph[i][j][1]);
-                        }
-                    }
+                    saveResultToolStripMenuItem.Enabled = true;
+                    saveInputToolStripMenuItem.Enabled = true;
+
+                    List<double[]>[] graphs =calculation.calculetGraph(leftBorder, rightBorder, a, c, ref points, ref dot);
+
+                    for (int i = 0; i < graphs.Length; i++) 
+                        for (int j = 0; j < graphs[i].Count; j++)
+                            chart1.Series[i].Points.AddXY(graphs[i][j][0], graphs[i][j][1]);
                 }
                 else
                     errorProvider1.SetError(textBox2, errorOfConst);
             }
         }
-
         private void readDataToolStripMenuItem_Click(object sender, EventArgs e)
         {
             
@@ -169,6 +165,15 @@ namespace Lab_3_gr
 
         }
 
+        private void saveResultInToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "Excel files (*.xlsx)|*.xlsx|All files (*.xlsx)|*.xlsx";
+            saveFileDialog.CreatePrompt = true;
+            saveFileDialog.OverwritePrompt = true;
+            saveFileDialog.ShowDialog();
+        }
+
         private void AboutToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             if (!aboutProgr.Visible)
@@ -184,22 +189,29 @@ namespace Lab_3_gr
         }
         private void button2_Click(object sender, EventArgs e)
         {
+            chart1.ChartAreas[0].AxisX.LabelStyle.Format = "F2";
+            for(int i = 0; i < numberGraphs; i++)
+                chart1.Series[i].Points.Clear();
+
             if (CheckData(textBox1.Text, textBox2.Text, textBox3.Text, textBox4.Text, textBox5.Text))
             {
                 a = Math.Abs(a);
                 c = Math.Abs(c);
                 points = new List<double>();
                 dot = new List<double>();
-                double left = leftBorder;
-                while (left <= rightBorder + 0.00001)
-                {
-                    dot.Add(left);
-                    left += step;
-                }
+
+                for (double i = leftBorder; i <= rightBorder + 0.00001; i += step)
+                    dot.Add(Math.Round(i, 3));
+
                 if (calculation.GetPoints(a, c, ref points, ref dot))
                 {
-                    saveResultToolStripMenuItem.Enabled = false;
-                    saveInputToolStripMenuItem.Enabled = false;
+                    saveResultToolStripMenuItem.Enabled = true;
+                    saveInputToolStripMenuItem.Enabled = true;
+                    List<double[]>[] graphs = calculation.calculetGraph(leftBorder, rightBorder, a, c, ref points, ref dot);
+                    for (int i = 0; i < graphs.Length; i++)
+                        for (int j = 0; j < graphs[i].Count; j++)
+                            chart1.Series[i].Points.AddXY(graphs[i][j][0], graphs[i][j][1]);
+
                     Table table = new Table();
                     table.createTable(dot, points);
                     table.ShowDialog();

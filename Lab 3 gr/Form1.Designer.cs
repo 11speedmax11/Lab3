@@ -58,6 +58,7 @@ namespace Lab_3_gr
             this.readDataToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.AboutToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.button2 = new System.Windows.Forms.Button();
+            this.saveResultInToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
@@ -94,7 +95,7 @@ namespace Lab_3_gr
             this.chart1.Series.Add(series2);
             this.chart1.Series.Add(series3);
             this.chart1.Series.Add(series4);
-            this.chart1.Size = new System.Drawing.Size(545, 400);
+            this.chart1.Size = new System.Drawing.Size(545, 427);
             this.chart1.TabIndex = 0;
             this.chart1.Text = "chart1";
             // 
@@ -154,7 +155,7 @@ namespace Lab_3_gr
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(696, 334);
+            this.button1.Location = new System.Drawing.Point(696, 320);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(165, 50);
             this.button1.TabIndex = 11;
@@ -237,7 +238,8 @@ namespace Lab_3_gr
             this.оПрограммеToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.saveResultToolStripMenuItem,
             this.saveInputToolStripMenuItem,
-            this.readDataToolStripMenuItem});
+            this.readDataToolStripMenuItem,
+            this.saveResultInToolStripMenuItem});
             this.оПрограммеToolStripMenuItem.Name = "оПрограммеToolStripMenuItem";
             this.оПрограммеToolStripMenuItem.Size = new System.Drawing.Size(46, 24);
             this.оПрограммеToolStripMenuItem.Text = "File";
@@ -272,7 +274,7 @@ namespace Lab_3_gr
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(696, 390);
+            this.button2.Location = new System.Drawing.Point(696, 392);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(165, 47);
             this.button2.TabIndex = 19;
@@ -280,11 +282,18 @@ namespace Lab_3_gr
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
+            // saveResultInToolStripMenuItem
+            // 
+            this.saveResultInToolStripMenuItem.Name = "saveResultInToolStripMenuItem";
+            this.saveResultInToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.saveResultInToolStripMenuItem.Text = "save result in excal";
+            this.saveResultInToolStripMenuItem.Click += new System.EventHandler(this.saveResultInToolStripMenuItem_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(896, 462);
+            this.ClientSize = new System.Drawing.Size(896, 489);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.textBox5);
             this.Controls.Add(this.label6);
@@ -340,6 +349,7 @@ namespace Lab_3_gr
         private System.Windows.Forms.ToolStripMenuItem saveResultToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem saveInputToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem readDataToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem saveResultInToolStripMenuItem;
     }
 }
 
